@@ -1,0 +1,5 @@
+Hello,Welcome to GIT
+Git init
+mkdir
+ls
+cd
