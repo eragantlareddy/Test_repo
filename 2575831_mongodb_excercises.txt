@@ -1,0 +1,918 @@
+test> db.patients.insertMany([
+... {
+... firstname:"max",
+... lastname:"schwarzmueller",
+... age:"29",
+... history:[{"disease":"cold"}]
+... },
+... {
+... firstname:"phani",
+... lastname:"reddy",
+... age:"22",
+... history:[{"disease":"cold"}]
+... },
+... {
+... firstname:"bhanu",
+... lastname:"prakash",
+... age:"34",
+... history:[{"disease":"fever"}]
+... }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("651288877d7078354fd2cbff"),
+    '1': ObjectId("651288877d7078354fd2cc00"),
+    '2': ObjectId("651288877d7078354fd2cc01")
+  }
+}
+test> db.patient.find()
+
+test> db.patients.find()
+[
+  {
+    _id: ObjectId("651288877d7078354fd2cbff"),
+    firstname: 'max',
+    lastname: 'schwarzmueller',
+    age: '29',
+    history: [ { disease: 'cold' } ]
+  },
+  {
+    _id: ObjectId("651288877d7078354fd2cc00"),
+    firstname: 'phani',
+    lastname: 'reddy',
+    age: '22',
+    history: [ { disease: 'cold' } ]
+  },
+  {
+    _id: ObjectId("651288877d7078354fd2cc01"),
+    firstname: 'bhanu',
+    lastname: 'prakash',
+    age: '34',
+    history: [ { disease: 'fever' } ]
+  }
+]
+test> db.patients.find().pretty()
+[
+  {
+    _id: ObjectId("651288877d7078354fd2cbff"),
+    firstname: 'max',
+    lastname: 'schwarzmueller',
+    age: '29',
+    history: [ { disease: 'cold' } ]
+  },
+  {
+    _id: ObjectId("651288877d7078354fd2cc00"),
+    firstname: 'phani',
+    lastname: 'reddy',
+    age: '22',
+    history: [ { disease: 'cold' } ]
+  },
+  {
+    _id: ObjectId("651288877d7078354fd2cc01"),
+    firstname: 'bhanu',
+    lastname: 'prakash',
+    age: '34',
+    history: [ { disease: 'fever' } ]
+  }
+]
+test> db.patients.updateMany({"firstname":"bhanu"},{$set:{"firstname":"reddy","age":56}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+test> db.patients.find().pretty()
+[
+  {
+    _id: ObjectId("651288877d7078354fd2cbff"),
+    firstname: 'max',
+    lastname: 'schwarzmueller',
+    age: '29',
+    history: [ { disease: 'cold' } ]
+  },
+  {
+    _id: ObjectId("651288877d7078354fd2cc00"),
+    firstname: 'phani',
+    lastname: 'reddy',
+    age: '22',
+    history: [ { disease: 'cold' } ]
+  },
+  {
+    _id: ObjectId("651288877d7078354fd2cc01"),
+    firstname: 'reddy',
+    lastname: 'prakash',
+    age: 56,
+    history: [ { disease: 'fever' } ]
+  }
+]
+test> db.patients.updateMany({"firstname":"eragantla"},{$set:{"firstname":"reddy","lastname":"raju","age":45,"history":[{"disease":"cold"}]}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+test> db.patients.find().pretty()
+[
+  {
+    _id: ObjectId("651288877d7078354fd2cbff"),
+    firstname: 'max',
+    lastname: 'schwarzmueller',
+    age: '29',
+    history: [ { disease: 'cold' } ]
+  },
+  {
+    _id: ObjectId("651288877d7078354fd2cc00"),
+    firstname: 'phani',
+    lastname: 'reddy',
+    age: '22',
+    history: [ { disease: 'cold' } ]
+  },
+  {
+    _id: ObjectId("651288877d7078354fd2cc01"),
+    firstname: 'reddy',
+    lastname: 'prakash',
+    age: 56,
+    history: [ { disease: 'fever' } ]
+  }
+]
+test> db.patients.find({age:{gt:22}})
+
+test> db.patients.find({age:{$gt:22}})
+[
+  {
+    _id: ObjectId("651288877d7078354fd2cc01"),
+    firstname: 'reddy',
+    lastname: 'prakash',
+    age: 56,
+    history: [ { disease: 'fever' } ]
+  }
+]
+test> db.patients.deleteMany({"history":[{"disease":"cold"}]})
+{ acknowledged: true, deletedCount: 2 }
+test> db.patients.find().pretty()
+[
+  {
+    _id: ObjectId("651288877d7078354fd2cc01"),
+    firstname: 'reddy',
+    lastname: 'prakash',
+    age: 56,
+    history: [ { disease: 'fever' } ]
+  }
+]
+test> show dbs
+admin         40.00 KiB
+config        72.00 KiB
+local         72.00 KiB
+mongo          8.00 KiB
+movies        40.00 KiB
+moviestarts   40.00 KiB
+new_database  80.00 KiB
+test          72.00 KiB
+test> db.companyinsertOne({
+... name:"ford",
+... stockvalues:"2000",
+... employees:"2988",
+... })
+TypeError: db.companyinsertOne is not a function
+test> db.company.insertOne({ "name": "ford", "stockvalues": "2000", "employees": "2988" })
+{
+  acknowledged: true,
+  insertedId: ObjectId("651296a17d7078354fd2cc02")
+}
+test> db.company.insertMany([{
+... name:"audi",
+... stockvalues:"3455",
+... employees:"3423",
+... },
+... {
+... name:"bmw",
+... stockvalues:"2343",
+... employees:"2142",
+... },
+... {
+... name:"benz",
+... stockvalues:"2575",
+... emloyees:"2123",
+... }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("651297607d7078354fd2cc03"),
+    '1': ObjectId("651297607d7078354fd2cc04"),
+    '2': ObjectId("651297607d7078354fd2cc05")
+  }
+}
+test> db.company.find()
+[
+  {
+    _id: ObjectId("651296a17d7078354fd2cc02"),
+    name: 'ford',
+    stockvalues: '2000',
+    employees: '2988'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc03"),
+    name: 'audi',
+    stockvalues: '3455',
+    employees: '3423'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc04"),
+    name: 'bmw',
+    stockvalues: '2343',
+    employees: '2142'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc05"),
+    name: 'benz',
+    stockvalues: '2575',
+    emloyees: '2123'
+  }
+]
+test> db.company.insertOne({
+... name:"ford",
+... stockvalues:"2000",
+... employees:"2988",
+... })
+{
+  acknowledged: true,
+  insertedId: ObjectId("651297be7d7078354fd2cc06")
+}
+test> db.company.find()
+[
+  {
+    _id: ObjectId("651296a17d7078354fd2cc02"),
+    name: 'ford',
+    stockvalues: '2000',
+    employees: '2988'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc03"),
+    name: 'audi',
+    stockvalues: '3455',
+    employees: '3423'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc04"),
+    name: 'bmw',
+    stockvalues: '2343',
+    employees: '2142'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc05"),
+    name: 'benz',
+    stockvalues: '2575',
+    emloyees: '2123'
+  },
+  {
+    _id: ObjectId("651297be7d7078354fd2cc06"),
+    name: 'ford',
+    stockvalues: '2000',
+    employees: '2988'
+  }
+]
+test> db.system.indexes.find()
+
+test> db.company.ensureindex({name:1},{unique:true,dropDups:true})
+TypeError: db.company.ensureindex is not a function
+test> db.company.ensureIndex({name:1},{unique:true,dropDups:true})
+MongoServerError: Index build failed: 112cb20c-c1f7-4f03-a326-5bc0f9420d94: Collection test.company ( 3bf43a85-d4cb-4615-bdc1-49363f380ead ) :: caused by :: E11000 duplicate key error collection: test.company index: name_1 dup key: { name: "ford" }
+test> db.company.find()
+[
+  {
+    _id: ObjectId("651296a17d7078354fd2cc02"),
+    name: 'ford',
+    stockvalues: '2000',
+    employees: '2988'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc03"),
+    name: 'audi',
+    stockvalues: '3455',
+    employees: '3423'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc04"),
+    name: 'bmw',
+    stockvalues: '2343',
+    employees: '2142'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc05"),
+    name: 'benz',
+    stockvalues: '2575',
+    emloyees: '2123'
+  },
+  {
+    _id: ObjectId("651297be7d7078354fd2cc06"),
+    name: 'ford',
+    stockvalues: '2000',
+    employees: '2988'
+  }
+]
+test> db.company.insertOne({
+... name:"buggati",
+... stockvalues:"5678",
+... employees:"23347",
+... journaling:"gauranteed",
+... })
+{
+  acknowledged: true,
+  insertedId: ObjectId("651298d17d7078354fd2cc07")
+}
+test> db.company.insertOne({
+... name:"ambassador",
+... stockvalues:"2121",
+... employees:"2211",
+... journaling:"not gauranteed"
+... })
+{
+  acknowledged: true,
+  insertedId: ObjectId("6512993c7d7078354fd2cc08")
+}
+test> db.company.find()
+[
+  {
+    _id: ObjectId("651296a17d7078354fd2cc02"),
+    name: 'ford',
+    stockvalues: '2000',
+    employees: '2988'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc03"),
+    name: 'audi',
+    stockvalues: '3455',
+    employees: '3423'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc04"),
+    name: 'bmw',
+    stockvalues: '2343',
+    employees: '2142'
+  },
+  {
+    _id: ObjectId("651297607d7078354fd2cc05"),
+    name: 'benz',
+    stockvalues: '2575',
+    emloyees: '2123'
+  },
+  {
+    _id: ObjectId("651297be7d7078354fd2cc06"),
+    name: 'ford',
+    stockvalues: '2000',
+    employees: '2988'
+  },
+  {
+    _id: ObjectId("651298d17d7078354fd2cc07"),
+    name: 'buggati',
+    stockvalues: '5678',
+    employees: '23347',
+    journaling: 'gauranteed'
+  },
+  {
+    _id: ObjectId("6512993c7d7078354fd2cc08"),
+    name: 'ambassador',
+    stockvalues: '2121',
+    employees: '2211',
+    journaling: 'not gauranteed'
+  }
+]
+test> show dbs
+admin          40.00 KiB
+config        108.00 KiB
+local          72.00 KiB
+mongo           8.00 KiB
+movies         40.00 KiB
+moviestarts    40.00 KiB
+new_database   80.00 KiB
+test          144.00 KiB
+test> db.moviestarts.insertMany([{
+... title:"the last student returns",
+... meta:{"rating":9.5,"aired":2018,"runtime":100},
+... visitors:1300000,
+... expectedvisitors:1550000,
+... genre:["thriller","drama","action"]
+... },
+... {
+... title:"supercharged teaching",
+... meta:{"rating":9.3,"aired":2016,"runtime":60},
+... visitors:370000,
+... expectedvisitors:1000000,
+... genre:["thriller","action"]
+... },
+... {
+... title:"teach me if you can",
+... meta:{"rating":8.5,"aired":2014,"runtime":90},
+... visitors:590378,
+... expextedvisitors:500000,
+... genre:["action","thriller"]
+... }])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("65129c077d7078354fd2cc09"),
+    '1': ObjectId("65129c077d7078354fd2cc0a"),
+    '2': ObjectId("65129c077d7078354fd2cc0b")
+  }
+}
+test> db.moviestarts.find()
+[
+  {
+    _id: ObjectId("65129c077d7078354fd2cc09"),
+    title: 'the last student returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedvisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ]
+  },
+  {
+    _id: ObjectId("65129c077d7078354fd2cc0a"),
+    title: 'supercharged teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedvisitors: 1000000,
+    genre: [ 'thriller', 'action' ]
+  },
+  {
+    _id: ObjectId("65129c077d7078354fd2cc0b"),
+    title: 'teach me if you can',
+    meta: { rating: 8.5, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expextedvisitors: 500000,
+    genre: [ 'action', 'thriller' ]
+  }
+]
+test> db.moviestarts.find({"meta.rating":{"$gt":9.2}})
+[
+  {
+    _id: ObjectId("65129c077d7078354fd2cc09"),
+    title: 'the last student returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedvisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ]
+  },
+  {
+    _id: ObjectId("65129c077d7078354fd2cc0a"),
+    title: 'supercharged teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedvisitors: 1000000,
+    genre: [ 'thriller', 'action' ]
+  }
+]
+test> db.moviestarts.find({"meta.runtime":{"$lt":100}})
+[
+  {
+    _id: ObjectId("65129c077d7078354fd2cc0a"),
+    title: 'supercharged teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedvisitors: 1000000,
+    genre: [ 'thriller', 'action' ]
+  },
+  {
+    _id: ObjectId("65129c077d7078354fd2cc0b"),
+    title: 'teach me if you can',
+    meta: { rating: 8.5, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expextedvisitors: 500000,
+    genre: [ 'action', 'thriller' ]
+  }
+]
+test> db.moviestarts.find({"genre":{"$in":["drama","action"]}})
+[
+  {
+    _id: ObjectId("65129c077d7078354fd2cc09"),
+    title: 'the last student returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedvisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ]
+  },
+  {
+    _id: ObjectId("65129c077d7078354fd2cc0a"),
+    title: 'supercharged teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedvisitors: 1000000,
+    genre: [ 'thriller', 'action' ]
+  },
+  {
+    _id: ObjectId("65129c077d7078354fd2cc0b"),
+    title: 'teach me if you can',
+    meta: { rating: 8.5, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expextedvisitors: 500000,
+    genre: [ 'action', 'thriller' ]
+  }
+]
+test> db.moviestarts.find({"visitors":{"$gte":"expectedvisitors"}})
+
+
+test> db.exmoviestarts.insertMany([
+... {
+... "title":"the last student returns",
+... "meta":{"rating":9.5,"aired":2018,"runtime":100},
+... "visitors":1300000,
+... "expectedvisitors":1550000,
+... "genre":["thriller","drama","action"],
+... "ratings":[10,9]
+... },
+... {
+... "title":"super charged teaching",
+... "meta":{"rating":9.3,"aired":2016,"runtime":60},
+... "visitors":370000,
+... "expectedvisitors":1000000,
+... "genre":["thriller","action"],
+... "ratings":[10,9,9]
+... },
+... {
+... "title":"teach me if you can",
+... "meta":{"rating":8,"aired":2014,"runtime":90},
+... "visitors":590378,
+... "expectedvisitors":5000000,
+... "genre":["action","thriller"],
+... "ratings":[8,8]
+... }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("6512a20e7d7078354fd2cc0c"),
+    '1': ObjectId("6512a20e7d7078354fd2cc0d"),
+    '2': ObjectId("6512a20e7d7078354fd2cc0e")
+  }
+}
+test> db.exmoviestarts.find()
+[
+  {
+    _id: ObjectId("6512a20e7d7078354fd2cc0c"),
+    title: 'the last student returns',
+    meta: { rating: 9.5, aired: 2018, runtime: 100 },
+    visitors: 1300000,
+    expectedvisitors: 1550000,
+    genre: [ 'thriller', 'drama', 'action' ],
+    ratings: [ 10, 9 ]
+  },
+  {
+    _id: ObjectId("6512a20e7d7078354fd2cc0d"),
+    title: 'super charged teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedvisitors: 1000000,
+    genre: [ 'thriller', 'action' ],
+    ratings: [ 10, 9, 9 ]
+  },
+  {
+    _id: ObjectId("6512a20e7d7078354fd2cc0e"),
+    title: 'teach me if you can',
+    meta: { rating: 8, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expectedvisitors: 5000000,
+    genre: [ 'action', 'thriller' ],
+    ratings: [ 8, 8 ]
+  }
+]
+test> db.exmoviestarts.find({"genre":{$size:2}})
+[
+  {
+    _id: ObjectId("6512a20e7d7078354fd2cc0d"),
+    title: 'super charged teaching',
+    meta: { rating: 9.3, aired: 2016, runtime: 60 },
+    visitors: 370000,
+    expectedvisitors: 1000000,
+    genre: [ 'thriller', 'action' ],
+    ratings: [ 10, 9, 9 ]
+  },
+  {
+    _id: ObjectId("6512a20e7d7078354fd2cc0e"),
+    title: 'teach me if you can',
+    meta: { rating: 8, aired: 2014, runtime: 90 },
+    visitors: 590378,
+    expectedvisitors: 5000000,
+    genre: [ 'action', 'thriller' ],
+    ratings: [ 8, 8 ]
+  }
+]
+test> db.exmoviestarts.find({"meta.aired":"2018"})
+
+test> db.exxmoviestarts.find({"meta.rating":{"$elemMatch":{"$gt":8.0,"$lt":10.0}}})
+test> db.sports.insertMany([
+... {
+... title:"football",
+... requiresteam:"true",
+... },
+... {
+... title:"cricket",
+... requiresteam:"false",
+... }])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("6512a4f47d7078354fd2cc0f"),
+    '1': ObjectId("6512a4f47d7078354fd2cc10")
+  }
+}
+test> db.sports.find()
+[
+  {
+    _id: ObjectId("6512a4f47d7078354fd2cc0f"),
+    title: 'football',
+    requiresteam: 'true'
+  },
+  {
+    _id: ObjectId("6512a4f47d7078354fd2cc10"),
+    title: 'cricket',
+    requiresteam: 'false'
+  }
+]
+test> db.sports.update({"requiresteam":"team"},{$set:{"minimumplayerrequired":"2"}})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+test> db.sports.updateOne({"requiresteam":"team"},{$set:{"minimumplayerrequired":"2"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+test> db.sports.find()
+[
+  {
+    _id: ObjectId("6512a4f47d7078354fd2cc0f"),
+    title: 'football',
+    requiresteam: 'true'
+  },
+  {
+    _id: ObjectId("6512a4f47d7078354fd2cc10"),
+    title: 'cricket',
+    requiresteam: 'false'
+  }
+]
+test> db.sports.updateMany({"requiresteam":"true"},{$set:{"minimumplayerrequired":"10"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+test> db.sports.updateMany({"requiresteam":"team"},{$set:{"minimumplayerrequired":"2"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+test> db.sports.find()
+[
+  {
+    _id: ObjectId("6512a4f47d7078354fd2cc0f"),
+    title: 'football',
+    requiresteam: 'true',
+    minimumplayerrequired: '10'
+  },
+  {
+    _id: ObjectId("6512a4f47d7078354fd2cc10"),
+    title: 'cricket',
+    requiresteam: 'false'
+  }
+]
+test> db.sports.updateMany({"requiresteam":"false"},{$set:{"minimumplayerrequired":"2"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+test> dbb.sports.find()
+ReferenceError: dbb is not defined
+test> db.sports.find()
+[
+  {
+    _id: ObjectId("6512a4f47d7078354fd2cc0f"),
+    title: 'football',
+    requiresteam: 'true',
+    minimumplayerrequired: '10'
+  },
+  {
+    _id: ObjectId("6512a4f47d7078354fd2cc10"),
+    title: 'cricket',
+    requiresteam: 'false',
+    minimumplayerrequired: '2'
+  }
+]
+test> db.place.insert({
+... "name":"india",
+... "location":{
+... "coordinates":[22.243560814153753,84.8109429557567],
+... "type":"point"}
+... })
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("6512b30f7d7078354fd2cc14") }
+}
+test> db.place.find()
+[
+  {
+    _id: ObjectId("6512aea67d7078354fd2cc11"),
+    name: 'japan',
+    location: { coordinates: [ 76.1432, 87.3892 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512afce7d7078354fd2cc12"),
+    name: 'usa',
+    location: { coordinates: [ 34.23123, 33.456 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512b07b7d7078354fd2cc13"),
+    name: 'uk',
+    location: { coordinates: [ 12.323, 43.443 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512b30f7d7078354fd2cc14"),
+    name: 'india',
+    location: {
+      coordinates: [ 22.243560814153753, 84.8109429557567 ],
+      type: 'point'
+    }
+  }
+]
+test> db.place.insert({
+... "name":"china",
+... "location":{"coordinates":[31.406147551419014,85.78667790699605],
+... "type":"point"
+... }
+... },
+... {
+... "name":"Big Ben",
+... "location":{
+... "coordinates":[-0.1268194,51.5007292],
+... "type":"point"
+... }})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("6512b4027d7078354fd2cc15") }
+}
+test> db.place.find()
+[
+  {
+    _id: ObjectId("6512aea67d7078354fd2cc11"),
+    name: 'japan',
+    location: { coordinates: [ 76.1432, 87.3892 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512afce7d7078354fd2cc12"),
+    name: 'usa',
+    location: { coordinates: [ 34.23123, 33.456 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512b07b7d7078354fd2cc13"),
+    name: 'uk',
+    location: { coordinates: [ 12.323, 43.443 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512b30f7d7078354fd2cc14"),
+    name: 'india',
+    location: {
+      coordinates: [ 22.243560814153753, 84.8109429557567 ],
+      type: 'point'
+    }
+  },
+  {
+    _id: ObjectId("6512b4027d7078354fd2cc15"),
+    name: 'china',
+    location: {
+      coordinates: [ 31.406147551419014, 85.78667790699605 ],
+      type: 'point'
+    }
+  }
+]
+test> db.place.find()
+[
+  {
+    _id: ObjectId("6512aea67d7078354fd2cc11"),
+    name: 'japan',
+    location: { coordinates: [ 76.1432, 87.3892 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512afce7d7078354fd2cc12"),
+    name: 'usa',
+    location: { coordinates: [ 34.23123, 33.456 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512b07b7d7078354fd2cc13"),
+    name: 'uk',
+    location: { coordinates: [ 12.323, 43.443 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512b30f7d7078354fd2cc14"),
+    name: 'india',
+    location: {
+      coordinates: [ 22.243560814153753, 84.8109429557567 ],
+      type: 'point'
+    }
+  },
+  {
+    _id: ObjectId("6512b4027d7078354fd2cc15"),
+    name: 'china',
+    location: {
+      coordinates: [ 31.406147551419014, 85.78667790699605 ],
+      type: 'point'
+    }
+  }
+]
+test> db.place.insert({
+... "name":"USA",
+... "location":{"coordinates":[20.81507340471614,-12.008029331141712],
+... "type":"point"}})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("6512b48c7d7078354fd2cc16") }
+}
+test> db.place.find()
+[
+  {
+    _id: ObjectId("6512aea67d7078354fd2cc11"),
+    name: 'japan',
+    location: { coordinates: [ 76.1432, 87.3892 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512afce7d7078354fd2cc12"),
+    name: 'usa',
+    location: { coordinates: [ 34.23123, 33.456 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512b07b7d7078354fd2cc13"),
+    name: 'uk',
+    location: { coordinates: [ 12.323, 43.443 ], type: 'point' }
+  },
+  {
+    _id: ObjectId("6512b30f7d7078354fd2cc14"),
+    name: 'india',
+    location: {
+      coordinates: [ 22.243560814153753, 84.8109429557567 ],
+      type: 'point'
+    }
+  },
+  {
+    _id: ObjectId("6512b4027d7078354fd2cc15"),
+    name: 'china',
+    location: {
+      coordinates: [ 31.406147551419014, 85.78667790699605 ],
+      type: 'point'
+    }
+  },
+  {
+    _id: ObjectId("6512b48c7d7078354fd2cc16"),
+    name: 'USA',
+    location: {
+      coordinates: [ 20.81507340471614, -12.008029331141712 ],
+      type: 'point'
+    }
+  }
+]
+test> db.place.find({
+... location:{
+... $near:{
+... $geometry:{
+... type:"point",
+... coordinates:[-0.1268194,51.5007292]
+... },
+... $maxDistance:1000,
+... $minDistance:10}}})
+test> db.place.find({"name":"india"})
+[
+  {
+    _id: ObjectId("6512b30f7d7078354fd2cc14"),
+    name: 'india',
+    location: {
+      coordinates: [ 22.243560814153753, 84.8109429557567 ],
+      type: 'point'
+    }
+  }
+]
+test> db.geo.insert({
+... "name":"uk",
+... "location":{"coordinates":[41.4061475514190,85.78667790699],
+... "type":"point"}})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("6512b6d17d7078354fd2cc17") }
+}
